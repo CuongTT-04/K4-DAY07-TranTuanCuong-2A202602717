@@ -55,7 +55,10 @@ class OpenAIEmbedder:
 
         self.model_name = model_name
         self._backend_name = model_name
-        self.client = OpenAI()
+        self.client = OpenAI(
+            api_key=os.getenv("OPENAI_API_KEY"),
+            base_url=os.getenv("OPENAI_BASE_URL"),
+        )
 
     def __call__(self, text: str) -> list[float]:
         response = self.client.embeddings.create(model=self.model_name, input=text)
